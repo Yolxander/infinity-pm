@@ -137,6 +137,9 @@ export function LandingPageComponent() {
           </div>
         </motion.section>
 
+
+
+
         <motion.section 
           className="py-24 border-t border-gray-200"
           initial={{ opacity: 0 }}
@@ -227,6 +230,61 @@ export function LandingPageComponent() {
           </div>
         </motion.section>
 
+
+          <motion.div
+              className="max-w-2xl mx-auto text-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+          >
+            <h2 className="text-3xl font-light mb-6">Our Story</h2>
+            <p className="text-gray-700 mb-8">
+              Founded in 2010, Infinity Property Management has been revolutionizing
+              the Toronto real estate scene with our innovative approach and
+              unwavering commitment to excellence.
+            </p>
+            <Button variant="outline" className="rounded-full px-6">
+              Learn More <ChevronRight className="w-4 h-4 ml-2" />
+            </Button>
+          </motion.div>
+
+          <motion.div
+              className="mt-24 relative"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 transform -skew-y-6"></div>
+            <div className="relative z-10 py-16">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                {[
+                  {
+                    title: 'Property Management',
+                    content: 'Comprehensive management services for residential and commercial properties, ensuring optimal performance and tenant satisfaction.'
+                  },
+                  {
+                    title: 'Leasing Services',
+                    content: 'Expert tenant placement and lease management, maximizing occupancy rates and rental income for property owners.'
+                  },
+                  {
+                    title: 'Maintenance Solutions',
+                    content: 'Proactive maintenance programs and rapid response services to preserve and enhance property value.'
+                  }
+                ].map((service, index) => (
+                    <motion.div
+                        key={index}
+                        className="text-center"
+                        initial={{ y: 50, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ delay: 0.4 + index * 0.2, duration: 0.6 }}
+                    >
+                      <h2 className="text-3xl font-light mb-6">{service.title}</h2>
+                      <p className="text-gray-600">{service.content}</p>
+                    </motion.div>
+                ))}
+              </div>
+            </div>
+          </motion.div>
         <motion.section 
           className="py-24 border-t border-gray-200"
           initial={{ opacity: 0 }}
@@ -290,24 +348,25 @@ export function LandingPageComponent() {
           </div>
         </motion.section>
 
-        <motion.section 
-          className="py-24 border-t border-gray-200"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
+        <motion.section
+            className="py-24 border-t border-gray-200 relative overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <div className="container mx-auto px-4">
+          <div className="absolute inset-0 bg-gradient-to-r from-[#f5f5f5] via-[#e6c9c9] to-[#f5f5f5] animate-gradient-x"></div>
+          <div className="container mx-auto px-4 relative z-10">
             <div className="text-center mb-12">
-              <h3 className="text-3xl font-semibold mb-4">GET IN TOUCH</h3>
-              <p className="text-gray-600 mb-8 max-w-2xl mx-auto">
+              <h3 className="text-3xl font-semibold mb-4 text-gray-800">GET IN TOUCH</h3>
+              <p className="text-gray-700 mb-8 max-w-2xl mx-auto">
                 Have questions about our property management services? Want to learn more about how we can help you maximize your property's potential? Get in touch with us today!
               </p>
-              <MotionButton 
-                variant="outline" 
-                className="rounded-full px-8 py-3 text-lg"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => setIsModalOpen(true)}
+              <MotionButton
+                  variant="outline"
+                  className="rounded-full px-8 py-3 text-lg bg-white bg-opacity-80 hover:bg-opacity-100 transition-all duration-300 text-gray-800"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  onClick={() => setIsModalOpen(true)}
               >
                 GET IN TOUCH
               </MotionButton>
