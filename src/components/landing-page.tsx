@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { ChevronRight, Star, Clock, Building, Users, Wrench, BarChart, MapPin, Search, X } from "lucide-react"
+import { ChevronRight, Star, Clock, Building, Users, Wrench, BarChart, MapPin, Search, X, Menu } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 
 const services = [
@@ -26,6 +26,47 @@ const services = [
 
 const MotionButton = motion(Button)
 
+const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  return (
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'}`}>
+        <div className="container mx-auto px-4 flex justify-between items-center">
+          <h1 className="text-xl font-semibold">INFINITY PROPERTY MANAGEMENT</h1>
+          <nav className="hidden md:flex space-x-6">
+            <a href="#" className="text-sm hover:underline">HOME</a>
+            <a href="#" className="text-sm hover:underline">SERVICES</a>
+            <a href="#" className="text-sm hover:underline">PROPERTIES</a>
+            <a href="#" className="text-sm hover:underline">CONTACT</a>
+          </nav>
+          <button className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            <Menu className="w-6 h-6" />
+          </button>
+        </div>
+        {isMobileMenuOpen && (
+            <div className="md:hidden bg-white shadow-md">
+              <nav className="flex flex-col items-center py-4 space-y-4">
+                <a href="#" className="text-sm hover:underline">HOME</a>
+                <a href="#" className="text-sm hover:underline">SERVICES</a>
+                <a href="#" className="text-sm hover:underline">PROPERTIES</a>
+                <a href="#" className="text-sm hover:underline">CONTACT</a>
+              </nav>
+            </div>
+        )}
+      </header>
+  )
+}
+
 export function LandingPageComponent() {
   const [searchTerm, setSearchTerm] = useState('')
   const [carouselIndex, setCarouselIndex] = useState(0)
@@ -33,7 +74,7 @@ export function LandingPageComponent() {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const filteredServices = services.filter(service =>
-    service.toLowerCase().includes(searchTerm.toLowerCase())
+      service.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   const visibleServices = showAllServices ? filteredServices : filteredServices.slice(0, 3)
@@ -47,100 +88,90 @@ export function LandingPageComponent() {
   }
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#f5f5f5]">
-      <header className="border-b border-gray-200 py-4">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <h1 className="text-xl font-semibold">INFINITY PROPERTY MANAGEMENT</h1>
-          <nav className="space-x-6">
-            <a href="#" className="text-sm hover:underline">HOME</a>
-            <a href="#" className="text-sm hover:underline">SERVICES</a>
-            <a href="#" className="text-sm hover:underline">PROPERTIES</a>
-            <a href="#" className="text-sm hover:underline">CONTACT</a>
-          </nav>
-        </div>
-      </header>
+      <div className="flex flex-col min-h-screen bg-[#f5f5f5]">
+        <Navbar />
 
-      <main className="flex-grow">
-        <motion.section 
-          className="py-20"
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <div className="flex items-center mb-6">
-                <div className="w-12 h-12 bg-[#e6c9c9] rounded-full flex items-center justify-center mr-4">
-                  <Star className="w-6 h-6 text-black" />
+        <main className="flex-grow pt-20">
+          <motion.section
+              className="py-20"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+          >
+            <div className="container mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="flex items-center mb-6">
+                  <div className="w-12 h-12 bg-[#e6c9c9] rounded-full flex items-center justify-center mr-4">
+                    <Star className="w-6 h-6 text-black" />
+                  </div>
+                  <span className="text-lg font-semibold">4.8/5 Average Rating</span>
                 </div>
-                <span className="text-lg font-semibold">4.8/5 Average Rating</span>
+                <h2 className="text-5xl font-light mb-6">
+                  TORONTO'S PREMIER PROPERTY MANAGEMENT
+                </h2>
+                <div className="mb-6">
+                  <MotionButton
+                      variant="outline"
+                      className="rounded-full text-xs px-4 py-1 border-gray-400"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                  >
+                    24/7 AVAILABILITY
+                  </MotionButton>
+                </div>
+                <p className="text-gray-600 mb-8 max-w-md">
+                  INFINITY PROPERTY MANAGEMENT OFFERS COMPREHENSIVE SERVICES FOR PROPERTY OWNERS, FROM TENANT SCREENING TO MAINTENANCE, WITH UNPARALLELED PROFESSIONALISM AND EFFICIENCY.
+                </p>
+                <div className="space-x-4">
+                  <MotionButton
+                      variant="outline"
+                      className="rounded-full px-6"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                  >
+                    OUR SERVICES
+                  </MotionButton>
+                  <MotionButton
+                      variant="outline"
+                      className="rounded-full px-6"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => setIsModalOpen(true)}
+                  >
+                    GET IN TOUCH
+                  </MotionButton>
+                </div>
               </div>
-              <h2 className="text-5xl font-light mb-6">
-                TORONTO'S PREMIER PROPERTY MANAGEMENT
-              </h2>
-              <div className="mb-6">
-                <MotionButton 
-                  variant="outline" 
-                  className="rounded-full text-xs px-4 py-1 border-gray-400"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  24/7 AVAILABILITY
-                </MotionButton>
-              </div>
-              <p className="text-gray-600 mb-8 max-w-md">
-                INFINITY PROPERTY MANAGEMENT OFFERS COMPREHENSIVE SERVICES FOR PROPERTY OWNERS, FROM TENANT SCREENING TO MAINTENANCE, WITH UNPARALLELED PROFESSIONALISM AND EFFICIENCY.
-              </p>
-              <div className="space-x-4">
-                <MotionButton 
-                  variant="outline" 
-                  className="rounded-full px-6"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  OUR SERVICES
-                </MotionButton>
-                <MotionButton 
-                  variant="outline" 
-                  className="rounded-full px-6"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setIsModalOpen(true)}
-                >
-                  GET IN TOUCH
-                </MotionButton>
-              </div>
+              <motion.div
+                  className="relative"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <img
+                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/condos%20in%20toronto%20for%20sale-9Bg5Fcm7fzX2YOXVCab3MMi22k3CGY.webp"
+                    alt="Toronto skyline with CN Tower and rooftop terrace"
+                    className="rounded-3xl w-full h-auto"
+                />
+                <div className="absolute top-4 right-4 bg-white rounded-full p-2 flex flex-col items-center">
+                  <div className="w-2 h-2 bg-black rounded-full mb-1"></div>
+                  <div className="w-2 h-2 bg-gray-300 rounded-full mb-1"></div>
+                  <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
+                </div>
+                <div className="absolute bottom-4 right-4 bg-white rounded-full p-2">
+                  <ChevronRight className="w-6 h-6" />
+                </div>
+                <div className="absolute top-4 left-4 bg-gray-500 text-white rounded-full px-3 py-1 text-sm">
+                  TOP RATED
+                </div>
+              </motion.div>
             </div>
-            <motion.div 
-              className="relative"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
-              <img 
-                src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/condos%20in%20toronto%20for%20sale-9Bg5Fcm7fzX2YOXVCab3MMi22k3CGY.webp" 
-                alt="Toronto skyline with CN Tower and rooftop terrace" 
-                className="rounded-3xl w-full h-auto"
-              />
-              <div className="absolute top-4 right-4 bg-white rounded-full p-2 flex flex-col items-center">
-                <div className="w-2 h-2 bg-black rounded-full mb-1"></div>
-                <div className="w-2 h-2 bg-gray-300 rounded-full mb-1"></div>
-                <div className="w-2 h-2 bg-gray-300 rounded-full"></div>
-              </div>
-              <div className="absolute bottom-4 right-4 bg-white rounded-full p-2">
-                <ChevronRight className="w-6 h-6" />
-              </div>
-              <div className="absolute top-4 left-4 bg-gray-500 text-white rounded-full px-3 py-1 text-sm">
-                TOP RATED
-              </div>
-            </motion.div>
-          </div>
-        </motion.section>
+          </motion.section>
 
 
 
 
-        <motion.section 
+        <motion.section
           className="py-24 border-t border-gray-200"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -199,8 +230,8 @@ export function LandingPageComponent() {
               </div>
             </div>
             <div className="flex flex-wrap gap-4 justify-center">
-              <MotionButton 
-                variant="outline" 
+              <MotionButton
+                variant="outline"
                 className="rounded-full px-6"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -208,8 +239,8 @@ export function LandingPageComponent() {
                 <Clock className="w-4 h-4 mr-2" />
                 24/7 AVAILABILITY
               </MotionButton>
-              <MotionButton 
-                variant="outline" 
+              <MotionButton
+                variant="outline"
                 className="rounded-full px-6"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -217,8 +248,8 @@ export function LandingPageComponent() {
                 <MapPin className="w-4 h-4 mr-2" />
                 PROPERTY MARKETING
               </MotionButton>
-              <MotionButton 
-                variant="outline" 
+              <MotionButton
+                variant="outline"
                 className="rounded-full px-6"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -285,7 +316,7 @@ export function LandingPageComponent() {
               </div>
             </div>
           </motion.div>
-        <motion.section 
+        <motion.section
           className="py-24 border-t border-gray-200"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -299,8 +330,8 @@ export function LandingPageComponent() {
                 </div>
                 <h3 className="text-2xl font-semibold">CUSTOMER REVIEWS</h3>
               </div>
-              <MotionButton 
-                variant="outline" 
+              <MotionButton
+                variant="outline"
                 className="rounded-full px-6"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
