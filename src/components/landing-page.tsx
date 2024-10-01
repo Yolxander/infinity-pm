@@ -5,11 +5,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { ChevronRight, Star, Building, Search, X, Menu } from "lucide-react" // Removed unused Clock and MapPin imports
+import { ChevronRight, Star, Building, Search, X, Menu } from "lucide-react"
 import { motion, AnimatePresence, useAnimation, useInView } from "framer-motion"
 import Image from 'next/image'
 
-const services = [
+// Define services as an array of strings
+const services: string[] = [
   "Condo complex management",
   "Industrial property management",
   "Property inspections",
@@ -30,7 +31,8 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  const scrollToSection = (id) => {
+  // Define the type for 'id' as string
+  const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
     setIsMobileMenuOpen(false) // Close the menu after selecting an option
   }
@@ -79,7 +81,7 @@ const Navbar = () => {
   )
 }
 
-const ScrollAnimationWrapper = ({ children }) => {
+const ScrollAnimationWrapper = ({ children }: { children: React.ReactNode }) => {
   const controls = useAnimation()
   const ref = useRef(null)
   const inView = useInView(ref, { once: true })
@@ -107,10 +109,10 @@ const ScrollAnimationWrapper = ({ children }) => {
 }
 
 export function LandingPageComponent() {
-  const [searchTerm, setSearchTerm] = useState('')
-  const [carouselIndex, setCarouselIndex] = useState(0)
-  const [showAllServices, setShowAllServices] = useState(false)
-  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [searchTerm, setSearchTerm] = useState<string>('')  // Specify type
+  const [carouselIndex, setCarouselIndex] = useState<number>(0)  // Specify type
+  const [showAllServices, setShowAllServices] = useState<boolean>(false)  // Specify type
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)  // Specify type
 
   const filteredServices = services.filter(service =>
       service.toLowerCase().includes(searchTerm.toLowerCase())
@@ -209,15 +211,14 @@ export function LandingPageComponent() {
                     <h3 className="text-2xl sm:text-3xl font-semibold">OUR COMPREHENSIVE SERVICES</h3>
                   </div>
                   <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
-                    {/* Flex column on mobile */}
                     <div className="relative w-full md:w-auto">
                       <Input
                           type="text"
                           placeholder="Search services..."
                           value={searchTerm}
                           onChange={(e) => {
-                            setSearchTerm(e.target.value);
-                            setCarouselIndex(0);
+                            setSearchTerm(e.target.value)
+                            setCarouselIndex(0)
                           }}
                           className="pl-10 pr-4 py-2 rounded-full w-full md:w-auto"
                       />
