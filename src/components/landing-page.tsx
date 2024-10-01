@@ -5,9 +5,10 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { ChevronRight, Star, Clock, Building, Users, Wrench, BarChart, MapPin, Search, X, Menu } from "lucide-react"
+import { ChevronRight, Star, Clock, Building, MapPin, Search, X, Menu } from "lucide-react"
 import { motion, AnimatePresence, useAnimation, useInView } from "framer-motion"
 import { useRef } from 'react'
+import Image from 'next/image'  // Use Image from next/image
 
 const services = [
   "Condo complex management",
@@ -106,14 +107,6 @@ export function LandingPageComponent() {
 
   const visibleServices = showAllServices ? filteredServices : filteredServices.slice(0, 3)
 
-  const nextSlide = () => {
-    setCarouselIndex((prevIndex) => (prevIndex + 1) % Math.ceil(visibleServices.length / 3))
-  }
-
-  const prevSlide = () => {
-    setCarouselIndex((prevIndex) => (prevIndex - 1 + Math.ceil(visibleServices.length / 3)) % Math.ceil(visibleServices.length / 3))
-  }
-
   return (
       <div className="flex flex-col min-h-screen bg-[#f5f5f5]">
         <Navbar />
@@ -130,7 +123,7 @@ export function LandingPageComponent() {
                     <span className="text-lg font-semibold">4.8/5 Average Rating</span>
                   </div>
                   <h2 className="text-5xl font-light mb-6">
-                    TORONTO'S PREMIER PROPERTY MANAGEMENT
+                    PREMIER PROPERTY MANAGEMENT
                   </h2>
                   <div className="mb-6">
                     <MotionButton
@@ -171,9 +164,11 @@ export function LandingPageComponent() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                 >
-                  <img
+                  <Image
                       src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/condos%20in%20toronto%20for%20sale-9Bg5Fcm7fzX2YOXVCab3MMi22k3CGY.webp"
                       alt="Toronto skyline with CN Tower and rooftop terrace"
+                      width={1200}
+                      height={800}
                       className="rounded-3xl w-full h-auto"
                   />
                   <div className="absolute top-4 right-4 bg-white rounded-full p-2 flex flex-col items-center">
