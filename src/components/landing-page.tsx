@@ -225,6 +225,7 @@ export function LandingPageComponent() {
                     <MotionButton
                         variant="outline"
                         className="rounded-full px-6"
+                        onClick={() => setShowAllServices(!showAllServices)}
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
@@ -232,10 +233,9 @@ export function LandingPageComponent() {
                     </MotionButton>
                   </div>
                 </div>
-
                 <div className="relative">
-                  <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12`}>
-                    {visibleServices.slice(0, showAllServices ? filteredServices.length : 6).map((service, index) => (
+                  <div className={`grid grid-cols-3 gap-8 mb-12 ${showAllServices ? 'grid-rows-3' : 'grid-rows-1'}`}>
+                    {visibleServices.slice(carouselIndex * 3, (carouselIndex + (showAllServices ? 3 : 1)) * 3).map((service, index) => (
                         <motion.div
                             key={index}
                             initial={{ opacity: 0, y: 20 }}
@@ -244,7 +244,7 @@ export function LandingPageComponent() {
                         >
                           <Card className="bg-white rounded-2xl shadow-md hover:shadow-lg transition-shadow duration-300">
                             <CardContent className="p-6">
-                              <h4 className="text-lg sm:text-xl font-semibold mb-2">{service}</h4>
+                              <h4 className="text-xl font-semibold mb-2">{service}</h4>
                               <p className="text-gray-600">Professional {service.toLowerCase()} tailored to your needs.</p>
                             </CardContent>
                           </Card>
