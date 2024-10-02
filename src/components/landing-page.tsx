@@ -111,6 +111,7 @@ const Navbar = ({ setShowContactForm }: { setShowContactForm: (value: boolean) =
                 className="rounded-full px-6 py-2 border-black text-sm hover:bg-black hover:text-white transition-all"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
+                onClick={() => setShowContactForm(true)}
             >
               CONTACT
             </MotionButton>
