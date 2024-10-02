@@ -38,7 +38,7 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0)
+      setIsScrolled(window.scrollY > 50) // Trigger effect after scrolling 50px
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -46,20 +46,75 @@ const Navbar = () => {
   }, [])
 
   return (
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-4'}`}>
+      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-gradient-to-r from-[#e6c9c9] to-[#f5f5f5] shadow-lg py-4' : 'bg-transparent py-6'} backdrop-blur-md`}>
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <h1 className="md:text-xl text-[20px] font-semibold md:flex">INFINITY PROPERTY MANAGEMENT</h1>
-          <nav className="hidden md:flex space-x-6">
-            <a href="#home" onClick={() => scrollToSection('home')} className="text-sm hover:underline">HOME</a>
-            <a href="#out-story" onClick={() => scrollToSection('out-story')} className="text-sm hover:underline">OUR STORY</a>
-            <a href="#services" onClick={() => scrollToSection('services')} className="text-sm hover:underline">SERVICES</a>
-            <a href="#reviews" onClick={() => scrollToSection('reviews')} className="text-sm hover:underline">REVIEWS</a>
-            <a href="#contact" onClick={() => scrollToSection('contact')} className="text-sm hover:underline">CONTACT</a>
+          <motion.h1
+              className="md:text-2xl text-[22px] font-semibold md:flex hover:text-[#333333] transition-transform transform hover:scale-105"
+              whileHover={{ scale: 1.1 }}
+          >
+            INFINITY PROPERTY MANAGEMENT
+          </motion.h1>
+
+          {/* Desktop Nav */}
+          <nav className="hidden md:flex space-x-8 items-center text-sm">
+            <motion.a
+                href="#home"
+                className="text-gray-600 hover:text-black transition-colors relative group"
+                onClick={() => scrollToSection('home')}
+            >
+              <span className="group-hover:underline">HOME</span>
+              <motion.div
+                  className="h-0.5 bg-black absolute bottom-0 left-0 w-0 group-hover:w-full transition-all duration-300"
+              />
+            </motion.a>
+            <motion.a
+                href="#our-story"
+                className="text-gray-600 hover:text-black transition-colors relative group"
+                onClick={() => scrollToSection('our-story')}
+            >
+              <span className="group-hover:underline">OUR STORY</span>
+              <motion.div
+                  className="h-0.5 bg-black absolute bottom-0 left-0 w-0 group-hover:w-full transition-all duration-300"
+              />
+            </motion.a>
+            <motion.a
+                href="#services"
+                className="text-gray-600 hover:text-black transition-colors relative group"
+                onClick={() => scrollToSection('services')}
+            >
+              <span className="group-hover:underline">SERVICES</span>
+              <motion.div
+                  className="h-0.5 bg-black absolute bottom-0 left-0 w-0 group-hover:w-full transition-all duration-300"
+              />
+            </motion.a>
+            <motion.a
+                href="#reviews"
+                className="text-gray-600 hover:text-black transition-colors relative group"
+                onClick={() => scrollToSection('reviews')}
+            >
+              <span className="group-hover:underline">REVIEWS</span>
+              <motion.div
+                  className="h-0.5 bg-black absolute bottom-0 left-0 w-0 group-hover:w-full transition-all duration-300"
+              />
+            </motion.a>
+            <MotionButton
+                variant="outline"
+                className="rounded-full px-6 py-2 border-black text-sm hover:bg-black hover:text-white transition-all"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => setShowContactForm(true)}
+            >
+              CONTACT
+            </MotionButton>
           </nav>
+
+          {/* Mobile Menu Button */}
           <button className="md:hidden" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-            <Menu className="w-6 h-6" />
+            <Menu className="w-6 h-6 text-black" />
           </button>
         </div>
+
+        {/* Mobile Menu */}
         <AnimatePresence>
           {isMobileMenuOpen && (
               <motion.div
@@ -68,12 +123,21 @@ const Navbar = () => {
                   exit={{ opacity: 0, height: 0 }}
                   className="md:hidden bg-white shadow-md"
               >
-                <nav className="flex flex-col items-center py-4 space-y-4">
+                <nav className="flex flex-col items-center py-4 space-y-6">
                   <a href="#home" onClick={() => scrollToSection('home')} className="text-sm hover:underline">HOME</a>
-                  <a href="#out-story" onClick={() => scrollToSection('out-story')} className="text-sm hover:underline">UR STORY</a>
+                  <a href="#our-story" onClick={() => scrollToSection('our-story')} className="text-sm hover:underline">OUR STORY</a>
                   <a href="#services" onClick={() => scrollToSection('services')} className="text-sm hover:underline">SERVICES</a>
                   <a href="#reviews" onClick={() => scrollToSection('reviews')} className="text-sm hover:underline">REVIEWS</a>
                   <a href="#contact" onClick={() => scrollToSection('contact')} className="text-sm hover:underline">CONTACT</a>
+                  <MotionButton
+                      variant="outline"
+                      className="rounded-full px-6 py-2 border-black text-sm hover:bg-black hover:text-white transition-all"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => scrollToSection('contact')}
+                  >
+                    GET IN TOUCH
+                  </MotionButton>
                 </nav>
               </motion.div>
           )}
@@ -81,6 +145,7 @@ const Navbar = () => {
       </header>
   )
 }
+
 
 const ScrollAnimationWrapper = ({ children }: { children: React.ReactNode }) => {
   const controls = useAnimation()
