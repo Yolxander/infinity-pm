@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useLayoutEffect, useRef } from 'react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -36,7 +36,7 @@ const Navbar = ({ setShowContactForm }: { setShowContactForm: (value: boolean) =
     setIsMobileMenuOpen(false)
   }
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50) // Trigger effect after scrolling 50px
     }
@@ -51,6 +51,7 @@ const Navbar = ({ setShowContactForm }: { setShowContactForm: (value: boolean) =
           <motion.h1
               className="md:text-2xl text-[22px] font-semibold md:flex hover:text-[#333333] transition-transform transform hover:scale-105"
               whileHover={{ scale: 1.1 }}
+              style={{ willChange: 'transform' }}
           >
             INFINITY PROPERTY MANAGEMENT
           </motion.h1>
@@ -61,40 +62,48 @@ const Navbar = ({ setShowContactForm }: { setShowContactForm: (value: boolean) =
                 href="#home"
                 className="text-gray-600 hover:text-black transition-colors relative group"
                 onClick={() => scrollToSection('home')}
+                style={{ willChange: 'transform' }}
             >
               <span className="group-hover:underline">HOME</span>
               <motion.div
                   className="h-0.5 bg-black absolute bottom-0 left-0 w-0 group-hover:w-full transition-all duration-300"
+                  style={{ willChange: 'transform' }}
               />
             </motion.a>
             <motion.a
                 href="#our-story"
                 className="text-gray-600 hover:text-black transition-colors relative group"
                 onClick={() => scrollToSection('our-story')}
+                style={{ willChange: 'transform' }}
             >
               <span className="group-hover:underline">OUR STORY</span>
               <motion.div
                   className="h-0.5 bg-black absolute bottom-0 left-0 w-0 group-hover:w-full transition-all duration-300"
+                  style={{ willChange: 'transform' }}
               />
             </motion.a>
             <motion.a
                 href="#services"
                 className="text-gray-600 hover:text-black transition-colors relative group"
                 onClick={() => scrollToSection('services')}
+                style={{ willChange: 'transform' }}
             >
               <span className="group-hover:underline">SERVICES</span>
               <motion.div
                   className="h-0.5 bg-black absolute bottom-0 left-0 w-0 group-hover:w-full transition-all duration-300"
+                  style={{ willChange: 'transform' }}
               />
             </motion.a>
             <motion.a
                 href="#reviews"
                 className="text-gray-600 hover:text-black transition-colors relative group"
                 onClick={() => scrollToSection('reviews')}
+                style={{ willChange: 'transform' }}
             >
               <span className="group-hover:underline">REVIEWS</span>
               <motion.div
                   className="h-0.5 bg-black absolute bottom-0 left-0 w-0 group-hover:w-full transition-all duration-300"
+                  style={{ willChange: 'transform' }}
               />
             </motion.a>
             <MotionButton
@@ -102,7 +111,6 @@ const Navbar = ({ setShowContactForm }: { setShowContactForm: (value: boolean) =
                 className="rounded-full px-6 py-2 border-black text-sm hover:bg-black hover:text-white transition-all"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setShowContactForm(true)}
             >
               CONTACT
             </MotionButton>
@@ -133,7 +141,6 @@ const Navbar = ({ setShowContactForm }: { setShowContactForm: (value: boolean) =
                       className="rounded-full px-6 py-2 border-black text-sm hover:bg-black hover:text-white transition-all"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => setShowContactForm(true)}
                   >
                     GET IN TOUCH
                   </MotionButton>
@@ -150,7 +157,7 @@ const ScrollAnimationWrapper = ({ children }: { children: React.ReactNode }) => 
   const ref = useRef(null)
   const inView = useInView(ref, { once: true })
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (inView) {
       controls.start('visible')
     }
@@ -166,6 +173,7 @@ const ScrollAnimationWrapper = ({ children }: { children: React.ReactNode }) => 
             visible: { opacity: 1, y: 0 },
             hidden: { opacity: 0, y: 50 }
           }}
+          style={{ willChange: 'transform' }}
       >
         {children}
       </motion.div>
@@ -241,7 +249,7 @@ const ContactFormModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () =>
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                   >
-                   Submit
+                    Submit
                   </MotionButton>
                 </form>
               </motion.div>
@@ -268,7 +276,7 @@ export function LandingPageComponent() {
       <div className="flex flex-col min-h-screen bg-[#f5f5f5]">
         <Navbar setShowContactForm={setShowContactForm} />
 
-        <main className="flex-grow pt-20 overflow-x-hidden">
+        <main className="flex-grow pt-20">
           <ScrollAnimationWrapper>
             <section id="home" className="py-20 px-4 sm:px-6 lg:px-8">
               <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -481,7 +489,7 @@ export function LandingPageComponent() {
                 <div className="flex items-center justify-between mb-12">
                   <div className="flex items-center">
                     <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center mr-4">
-                      <Star className="w-6 h-6 text-white" />
+                      <Star className="w                      -6 h-6 text-white" />
                     </div>
                     <h3 className="text-2xl font-semibold">CUSTOMER REVIEWS</h3>
                   </div>
@@ -641,3 +649,4 @@ export function LandingPageComponent() {
       </div>
   )
 }
+
