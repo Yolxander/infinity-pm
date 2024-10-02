@@ -142,6 +142,7 @@ const Navbar = ({ setShowContactForm }: { setShowContactForm: (value: boolean) =
                       className="rounded-full px-6 py-2 border-black text-sm hover:bg-black hover:text-white transition-all"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      onClick={() => setShowContactForm(true)}
                   >
                     GET IN TOUCH
                   </MotionButton>
@@ -545,7 +546,7 @@ export function LandingPageComponent() {
           </ScrollAnimationWrapper>
 
           <ScrollAnimationWrapper>
-            <section id="contact" className="py-24 border-t border-gray-200 relative overflow-hidden px-4 sm:px-6 lg:px-8">
+            <section id="contact" className="py-24 border-t border-gray-200 relative px-4 sm:px-6 lg:px-8">
               <div className="absolute inset-0 bg-gradient-to-r from-[#f5f5f5] via-[#e6c9c9] to-[#f5f5f5] animate-gradient-x"></div>
               <div className="container mx-auto relative z-10">
                 <div className="text-center mb-12">
