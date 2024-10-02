@@ -27,7 +27,7 @@ const services: string[] = [
 
 const MotionButton = motion(Button)
 
-const Navbar = () => {
+const Navbar = ({ setShowContactForm }: { setShowContactForm: (value: boolean) => void }) => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
@@ -128,13 +128,12 @@ const Navbar = () => {
                   <a href="#our-story" onClick={() => scrollToSection('our-story')} className="text-sm hover:underline">OUR STORY</a>
                   <a href="#services" onClick={() => scrollToSection('services')} className="text-sm hover:underline">SERVICES</a>
                   <a href="#reviews" onClick={() => scrollToSection('reviews')} className="text-sm hover:underline">REVIEWS</a>
-                  <a href="#contact" onClick={() => scrollToSection('contact')} className="text-sm hover:underline">CONTACT</a>
                   <MotionButton
                       variant="outline"
                       className="rounded-full px-6 py-2 border-black text-sm hover:bg-black hover:text-white transition-all"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
-                      onClick={() => scrollToSection('contact')}
+                      onClick={() => setShowContactForm(true)}
                   >
                     GET IN TOUCH
                   </MotionButton>
@@ -145,7 +144,6 @@ const Navbar = () => {
       </header>
   )
 }
-
 
 const ScrollAnimationWrapper = ({ children }: { children: React.ReactNode }) => {
   const controls = useAnimation()
@@ -174,6 +172,85 @@ const ScrollAnimationWrapper = ({ children }: { children: React.ReactNode }) => 
   )
 }
 
+const ContactFormModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
+  return (
+      <AnimatePresence>
+        {isOpen && (
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+            >
+              <motion.div
+                  initial={{ scale: 0.9, opacity: 0 }}
+                  animate={{ scale: 1, opacity: 1 }}
+                  exit={{ scale: 0.9, opacity: 0 }}
+                  className="bg-white rounded-3xl p-8 max-w-lg w-full relative"
+              >
+                <button
+                    onClick={onClose}
+                    className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+                <h2 className="text-2xl font-semibold mb-4">Contact US</h2>
+                <form className="space-y-4">
+                  <div>
+                    <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                      Name
+                    </label>
+                    <Input id="name" placeholder="Your Name" />
+                  </div>
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                      Email
+                    </label>
+                    <Input id="email" type="email" placeholder="your@email.com" />
+                  </div>
+                  <div>
+                    <label htmlFor="propertyAddress" className="block text-sm font-medium text-gray-700 mb-1">
+                      Property Address
+                    </label>
+                    <Input id="propertyAddress" placeholder="123 Main St, Toronto, ON" />
+                  </div>
+                  <div>
+                    <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-1">
+                      Select Service
+                    </label>
+                    <select
+                        id="service"
+                        className="block w-full p-2.5 border rounded-lg"
+                    >
+                      {services.map((service, index) => (
+                          <option key={index} value={service}>
+                            {service}
+                          </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                      Message
+                    </label>
+                    <Textarea id="message" placeholder="How can we help you?" rows={4} />
+                  </div>
+                  <MotionButton
+                      type="submit"
+                      className="w-full rounded-full"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                  >
+                   Submit
+                  </MotionButton>
+                </form>
+              </motion.div>
+            </motion.div>
+        )}
+      </AnimatePresence>
+  )
+}
+
 export function LandingPageComponent() {
   const [searchTerm, setSearchTerm] = useState<string>('')
   const [carouselIndex, setCarouselIndex] = useState<number>(0)
@@ -185,14 +262,13 @@ export function LandingPageComponent() {
   )
 
   const visibleServices = showAllServices ? filteredServices : filteredServices.slice(0, 3)
+  const [showContactForm, setShowContactForm] = useState<boolean>(false)
 
   return (
       <div className="flex flex-col min-h-screen bg-[#f5f5f5]">
-        <Navbar />
+        <Navbar setShowContactForm={setShowContactForm} />
 
         <main className="flex-grow pt-20 overflow-x-hidden">
-
-
           <ScrollAnimationWrapper>
             <section id="home" className="py-20 px-4 sm:px-6 lg:px-8">
               <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -481,61 +557,63 @@ export function LandingPageComponent() {
               </div>
             </section>
           </ScrollAnimationWrapper>
-
-          <AnimatePresence>
-            {isModalOpen && (
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
-                >
-                  <motion.div
-                      initial={{ scale: 0.9, opacity: 0 }}
-                      animate={{ scale: 1, opacity: 1 }}
-                      exit={{ scale: 0.9, opacity: 0 }}
-                      className="bg-white rounded-3xl p-8 max-w-md w-full relative"
-                  >
-                    <button
-                        onClick={() => setIsModalOpen(false)}
-                        className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
-                    >
-                      <X className="w-6 h-6" />
-                    </button>
-                    <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
-                    <form className="space-y-4">
-                      <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                          Name
-                        </label>
-                        <Input id="name" placeholder="Your Name" />
-                      </div>
-                      <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                          Email
-                        </label>
-                        <Input id="email" type="email" placeholder="your@email.com" />
-                      </div>
-                      <div>
-                        <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                          Message
-                        </label>
-                        <Textarea id="message" placeholder="How can we help you?" rows={4} />
-                      </div>
-                      <MotionButton
-                          type="submit"
-                          className="w-full rounded-full"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                      >
-                        Send Message
-                      </MotionButton>
-                    </form>
-                  </motion.div>
-                </motion.div>
-            )}
-          </AnimatePresence>
         </main>
+
+        <AnimatePresence>
+          {isModalOpen && (
+              <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+              >
+                <motion.div
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.9, opacity: 0 }}
+                    className="bg-white rounded-3xl p-8 max-w-md w-full relative"
+                >
+                  <button
+                      onClick={() => setIsModalOpen(false)}
+                      className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
+                  >
+                    <X className="w-6 h-6" />
+                  </button>
+                  <h2 className="text-2xl font-semibold mb-4">Get in Touch</h2>
+                  <form className="space-y-4">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                        Name
+                      </label>
+                      <Input id="name" placeholder="Your Name" />
+                    </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+                        Email
+                      </label>
+                      <Input id="email" type="email" placeholder="your@email.com" />
+                    </div>
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
+                        Message
+                      </label>
+                      <Textarea id="message" placeholder="How can we help you?" rows={4} />
+                    </div>
+                    <MotionButton
+                        type="submit"
+                        className="w-full rounded-full"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
+                      Send Message
+                    </MotionButton>
+                  </form>
+                </motion.div>
+              </motion.div>
+          )}
+        </AnimatePresence>
+
+        <ContactFormModal isOpen={showContactForm} onClose={() => setShowContactForm(false)} />
 
         <footer className="border-t border-gray-200 py-8">
           <div className="container mx-auto px-4">
