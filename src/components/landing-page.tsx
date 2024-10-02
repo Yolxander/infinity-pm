@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { ChevronRight, Star, Building, Search, X, Menu, Clock, Users, Wrench, BarChart, MapPin } from "lucide-react"
+import { ChevronRight, Star, Building, Search, X, Menu, Users, Wrench, BarChart } from "lucide-react"
 import { motion, AnimatePresence, useAnimation, useInView } from "framer-motion"
 import Image from 'next/image'
 
@@ -345,7 +345,7 @@ export function LandingPageComponent() {
           </ScrollAnimationWrapper>
 
           <ScrollAnimationWrapper>
-            <section id="out-story" className="py-24 px-4 sm:px-6 lg:px-8 ">
+            <section id="our-story" className="py-24 px-4 sm:px-6 lg:px-8 ">
               <div className="container mx-auto ">
                 <div className="text-center mb-12">
                   <h2 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4">Our Story</h2>
@@ -388,7 +388,7 @@ export function LandingPageComponent() {
                     </div>
                     <h3 className="text-xl font-semibold mb-4">Our Growth</h3>
                     <p className="text-gray-600">
-                      Over the years, we've expanded our services to cover a wide range
+                      Over the years, we have expanded our services to cover a wide range
                       of property management needs, helping hundreds of property owners
                       achieve their goals.
                     </p>
@@ -476,7 +476,7 @@ export function LandingPageComponent() {
 
 
           <ScrollAnimationWrapper>
-            <section className="py-24 border-t border-gray-200">
+            <section id="reviews" className="py-24 border-t border-gray-200">
               <div className="container mx-auto px-4">
                 <div className="flex items-center justify-between mb-12">
                   <div className="flex items-center">
