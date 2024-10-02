@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { ChevronRight, Star, Building, Search, X, Menu } from "lucide-react"
+import { ChevronRight, Star, Building, Search, X, Menu, Clock, Users, Wrench, BarChart, MapPin } from "lucide-react"
 import { motion, AnimatePresence, useAnimation, useInView } from "framer-motion"
 import Image from 'next/image'
 
@@ -31,10 +31,9 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  // Define the type for 'id' as string
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
-    setIsMobileMenuOpen(false) // Close the menu after selecting an option
+    setIsMobileMenuOpen(false)
   }
 
   useEffect(() => {
@@ -52,6 +51,7 @@ const Navbar = () => {
           <h1 className="md:text-xl text-[20px] font-semibold md:flex">INFINITY PROPERTY MANAGEMENT</h1>
           <nav className="hidden md:flex space-x-6">
             <a href="#home" onClick={() => scrollToSection('home')} className="text-sm hover:underline">HOME</a>
+            <a href="#out-story" onClick={() => scrollToSection('out-story')} className="text-sm hover:underline">OUR STORY</a>
             <a href="#services" onClick={() => scrollToSection('services')} className="text-sm hover:underline">SERVICES</a>
             <a href="#reviews" onClick={() => scrollToSection('reviews')} className="text-sm hover:underline">REVIEWS</a>
             <a href="#contact" onClick={() => scrollToSection('contact')} className="text-sm hover:underline">CONTACT</a>
@@ -70,6 +70,7 @@ const Navbar = () => {
               >
                 <nav className="flex flex-col items-center py-4 space-y-4">
                   <a href="#home" onClick={() => scrollToSection('home')} className="text-sm hover:underline">HOME</a>
+                  <a href="#out-story" onClick={() => scrollToSection('out-story')} className="text-sm hover:underline">UR STORY</a>
                   <a href="#services" onClick={() => scrollToSection('services')} className="text-sm hover:underline">SERVICES</a>
                   <a href="#reviews" onClick={() => scrollToSection('reviews')} className="text-sm hover:underline">REVIEWS</a>
                   <a href="#contact" onClick={() => scrollToSection('contact')} className="text-sm hover:underline">CONTACT</a>
@@ -109,10 +110,10 @@ const ScrollAnimationWrapper = ({ children }: { children: React.ReactNode }) => 
 }
 
 export function LandingPageComponent() {
-  const [searchTerm, setSearchTerm] = useState<string>('')  // Specify type
-  const [carouselIndex, setCarouselIndex] = useState<number>(0)  // Specify type
-  const [showAllServices, setShowAllServices] = useState<boolean>(false)  // Specify type
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)  // Specify type
+  const [searchTerm, setSearchTerm] = useState<string>('')
+  const [carouselIndex, setCarouselIndex] = useState<number>(0)
+  const [showAllServices, setShowAllServices] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
 
   const filteredServices = services.filter(service =>
       service.toLowerCase().includes(searchTerm.toLowerCase())
@@ -125,6 +126,8 @@ export function LandingPageComponent() {
         <Navbar />
 
         <main className="flex-grow pt-20 overflow-x-hidden">
+
+
           <ScrollAnimationWrapper>
             <section id="home" className="py-20 px-4 sm:px-6 lg:px-8">
               <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -201,7 +204,79 @@ export function LandingPageComponent() {
           </ScrollAnimationWrapper>
 
           <ScrollAnimationWrapper>
-            <section id="services" className="mt-10 py-24 border-t border-gray-200 px-4 sm:px-6 lg:px-8">
+            <section id="out-story" className="py-24 px-4 sm:px-6 lg:px-8 ">
+              <div className="container mx-auto ">
+                <div className="text-center mb-12">
+                  <h2 className="text-3xl sm:text-4xl font-semibold text-gray-800 mb-4">Our Story</h2>
+                  <p className="text-gray-700 max-w-2xl mx-auto">
+                    Founded in 2010, Infinity Property Management has been revolutionizing
+                    the Toronto real estate scene with our innovative approach and unwavering
+                    commitment to excellence. Over the years, we’ve helped property owners
+                    maximize the potential of their investments through hands-on management,
+                    superior customer service, and a passion for perfection.
+                  </p>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+                  {/* Story Block 1 */}
+                  <motion.div
+                      className="text-center"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.1 }}
+                  >
+                    <div className="w-16 h-16 mx-auto mb-4 bg-[#e6c9c9] rounded-full flex items-center justify-center">
+                      <Users className="w-8 h-8 text-gray-800" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-4">Our People</h3>
+                    <p className="text-gray-600">
+                      Our team consists of dedicated professionals with years of
+                      experience in property management and a commitment to
+                      delivering top-tier service to our clients.
+                    </p>
+                  </motion.div>
+
+                  {/* Story Block 2 */}
+                  <motion.div
+                      className="text-center"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                    <div className="w-16 h-16 mx-auto mb-4 bg-[#e6c9c9] rounded-full flex items-center justify-center">
+                      <BarChart className="w-8 h-8 text-gray-800" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-4">Our Growth</h3>
+                    <p className="text-gray-600">
+                      Over the years, we've expanded our services to cover a wide range
+                      of property management needs, helping hundreds of property owners
+                      achieve their goals.
+                    </p>
+                  </motion.div>
+
+                  {/* Story Block 3 */}
+                  <motion.div
+                      className="text-center"
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.3 }}
+                  >
+                    <div className="w-16 h-16 mx-auto mb-4 bg-[#e6c9c9] rounded-full flex items-center justify-center">
+                      <Wrench className="w-8 h-8 text-gray-800" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-4">Our Expertise</h3>
+                    <p className="text-gray-600">
+                      From tenant management to property maintenance, our expertise ensures
+                      your property is well taken care of and continues to deliver strong
+                      returns.
+                    </p>
+                  </motion.div>
+                </div>
+              </div>
+            </section>
+          </ScrollAnimationWrapper>
+
+          <ScrollAnimationWrapper>
+            <section id="services" className="mt-10 py-24 border-t border-gray-200 px-4 sm:px-6 lg:px-8  inset-0 bg-gradient-to-r from-[#e6c9c9] via-[#e6c9c9] to-[#f5f5f5] animate-gradient-x">
               <div className="container mx-auto">
                 <div className="flex flex-col md:flex-row items-center justify-between mb-12">
                   <div className="flex items-center mb-4 md:mb-0">
@@ -259,30 +334,26 @@ export function LandingPageComponent() {
           </ScrollAnimationWrapper>
 
 
-
           <ScrollAnimationWrapper>
-            <section id="reviews" className="py-24 px-4 sm:px-6 lg:px-8">
-              <div className="container mx-auto">
-                {/* Updated flex behavior for mobile and desktop */}
-                <div className="flex flex-col md:flex-row items-center justify-between mb-12">
-                  <div className="flex items-center mb-4 md:mb-0"> {/* Adjust for better spacing on mobile */}
+            <section className="py-24 border-t border-gray-200">
+              <div className="container mx-auto px-4">
+                <div className="flex items-center justify-between mb-12">
+                  <div className="flex items-center">
                     <div className="w-12 h-12 bg-black rounded-full flex items-center justify-center mr-4">
                       <Star className="w-6 h-6 text-white" />
                     </div>
-                    <h3 className="text-2xl sm:text-3xl font-semibold">CUSTOMER REVIEWS</h3>
+                    <h3 className="text-2xl font-semibold">CUSTOMER REVIEWS</h3>
                   </div>
                   <MotionButton
                       variant="outline"
-                      className="rounded-full px-6 w-full md:w-auto"
+                      className="rounded-full px-6"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                   >
                     See All Reviews
                   </MotionButton>
                 </div>
-
-                {/* Responsive grid layout */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
                   {[
                     {
                       content: "Infinity Property Management has been exceptional in handling our rental property. Their professionalism and efficiency are unmatched. We've seen a significant improvement in our property's performance since partnering with them.",
@@ -322,7 +393,6 @@ export function LandingPageComponent() {
               </div>
             </section>
           </ScrollAnimationWrapper>
-
 
           <ScrollAnimationWrapper>
             <section id="contact" className="py-24 border-t border-gray-200 relative overflow-hidden px-4 sm:px-6 lg:px-8">
